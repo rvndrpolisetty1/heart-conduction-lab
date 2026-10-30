@@ -11,6 +11,7 @@ import { SUGGESTIONS, findAnswer, getAnswer } from './answers.js';
 import { createLasso } from './lasso.js';
 import { createStudio } from './studio.js';
 import { createHow } from './how.js';
+import { createTour } from './tour.js';
 import { LESSON } from './lesson.js';
 import { RHYTHM_CARDS } from './content.js';
 import { say, hush, setVoice, voiceAvailable } from './speech.js';
@@ -704,6 +705,26 @@ const studio = window.__studio = createStudio({
   openAsStudent: () => { showView('student'); setTimeout(() => openLesson(LESSON), 300); },
 });
 
+// Welcome screen and guided tour.
+function tourReset(view) {
+  closeGen();
+  if (!$('.quiz').hidden) $('.quiz-x').click();
+  $$('.pop:not([hidden]) .pop-x').forEach(x => x.click());
+  setCalipers(false);
+  if (lasso.on) lasso.toggle(false);
+  setMapUI(false);
+  studio.reset();
+  $('.ask input').value = ''; $('.composer input').value = '';
+  showView(view);
+  levels.start(0);
+  setLayer(0, { quiet: true });
+}
+const tour = window.__tour = createTour({
+  room, store, reset: tourReset,
+  askDropped: () => ask('Why did this beat drop?', { answerId: 'mobitz1Drop' }),
+});
+$('.tour-launch').addEventListener('click', () => tour.start());
+
 // 13. How it works: the animated pipeline, with buttons into the two live demos.
 const how = createHow({
   onTutor: () => { showView('tutor'); setTimeout(() => $('.play-demo').click(), 400); },
@@ -731,6 +752,8 @@ function onHeartReady() {
   });
   setLayer(0, { quiet: true });
   setTimeout(() => levels.start(0), 700);
+  // First visit: say what this is and offer the tour. Automated test browsers go straight in.
+  if ((!store.get('welcomed') && !navigator.webdriver) || location.search.includes('welcome')) tour.welcome();
 }
 
 // Start (the mode highlight only animates after its first placement)

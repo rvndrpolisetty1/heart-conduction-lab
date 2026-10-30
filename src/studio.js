@@ -3,10 +3,11 @@
 // answered with an inline visual. Concept demo: every response is pre-built.
 
 import { createLibrary } from './library.js';
+import { pace } from './pace.js';
 import { createBuilder } from './build.js';
 import { REQUEST, OBJECTIVES, OBJECTIVE_EDIT, CHECKS, LESSON, QUICK } from './lesson.js';
 
-const sleep = ms => new Promise(r => setTimeout(r, ms));
+const sleep = ms => new Promise(r => setTimeout(r, ms * pace.k));
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
 // ctx: { heartApi, addTokens, talk(who, text), room, setLaptop(text), modelName(), onPublish(lesson), openAsStudent() }

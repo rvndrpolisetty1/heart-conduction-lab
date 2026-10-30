@@ -17,6 +17,8 @@ export const voiceAvailable = () => 'speechSynthesis' in window;
 // Say a line. `bubble` is { el, text } elements; `character` has setMouth(level, speaking).
 export function say(character, bubble, text, { cps = 32, hold = 2.6 } = {}) {
   return new Promise(resolve => {
+    // Record mode: the video's director owns the bubble and the mouths, in time with the real voices.
+    if (window.__recording || window.__touring) { setTimeout(resolve, (text.length / cps + hold) * 1000); return; }
     bubble.el.hidden = false;
     bubble.el.classList.remove('is-out');
     bubble.text.textContent = '';

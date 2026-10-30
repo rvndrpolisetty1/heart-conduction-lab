@@ -69,7 +69,7 @@ export async function createHeart(container, { onProgress = () => {}, engine } =
   const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'high-performance' });
   // Adaptive quality: start sharp, step the resolution down if frames run slow (checked once a second).
   const maxDpr = Math.min(devicePixelRatio || 1, 2);
-  let dpr = Math.min(maxDpr, 1.75);
+  let dpr = window.__recording ? maxDpr : Math.min(maxDpr, 1.75);
   renderer.setPixelRatio(dpr);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
@@ -329,7 +329,7 @@ export async function createHeart(container, { onProgress = () => {}, engine } =
   let running = true, speed = 1, paused = false, stateListener = () => {};
   let perfT = 0, perfN = 0, settled = 0;
   function adapt(rawDt) {
-    if (settled > 4) return;
+    if (settled > 4 || window.__recording) return;
     perfT += rawDt; perfN++;
     if (perfT < 1) return;
     const fps = perfN / perfT;

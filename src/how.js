@@ -23,7 +23,7 @@ export function createHow({ onTutor, onStudent }) {
   const nodes = [...root.querySelectorAll('.flow-nodes li')];
   $('.flow-table tbody').innerHTML = STAGES.map((s, i) => `<tr data-i="${i}"><td><b>${String(i + 1).padStart(2, '0')}</b> ${s.title}</td><td>${s.demo}</td><td>${s.prod}</td></tr>`).join('');
   const rows = [...root.querySelectorAll('.flow-table tbody tr')];
-  let pts = [], len = 0, marks = [], t = 0, hold = null, current = -1, last = performance.now();
+  let pts = [], len = 0, marks = [], t = 0, pos = 0, hold = null, current = -1, last = performance.now();
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function layout() {
@@ -71,8 +71,9 @@ export function createHow({ onTutor, onStudent }) {
     const dt = Math.min(50, now - last); last = now;
     if (!root.hidden && len) {
       if (hold === null && !reduced) t = (t + dt) % CYCLE;
-      const u = hold !== null ? marks[hold] / len : easeStops(t / CYCLE);
-      const s = u * len, p = path.getPointAtLength(s);
+      // Holding a stage: the packet glides there rather than jumping.
+      pos = hold !== null ? pos + (marks[hold] / len - pos) * (1 - Math.exp(-dt / 160)) : easeStops(t / CYCLE);
+      const s = pos * len, p = path.getPointAtLength(s);
       packet.setAttribute('cx', p.x); packet.setAttribute('cy', p.y);
       lit.style.strokeDashoffset = `${len - s}`;
       let i = 0; for (let k = 0; k < marks.length; k++) if (s >= marks[k] - 2) i = k;

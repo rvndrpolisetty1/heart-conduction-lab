@@ -6,7 +6,9 @@
 
 const TOKEN = /\/\/[^\n]*|'(?:[^'\\\n]|\\.)*'|`(?:[^`\\]|\\.)*`|\d+(?:\.\d+)?|[A-Za-z_$][\w$]*|\n|[ \t]+|[^\sA-Za-z_$\d]/g;
 const KEYWORDS = new Set(['const', 'let', 'return', 'true', 'false', 'null']);
-const sleep = ms => new Promise(r => setTimeout(r, ms));
+import { pace } from './pace.js';
+
+const sleep = ms => new Promise(r => setTimeout(r, ms * pace.k));
 const STAGES = ['Plan', 'Write', 'Compile', 'Check', 'Ready'];
 
 function classify(tok, next) {
