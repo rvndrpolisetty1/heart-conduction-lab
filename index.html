@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Heart Conduction Lab</title>
+<meta name="description" content="A concept demo of generative UI for medical teaching: a 3D heart conduction lab for tutors and students.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="src/app.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-7.5-10.3A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.7-7.5 10.3-7.5 10.3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M5 12h3l1.5-3 3 6 1.5-3h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-caliper" viewBox="0 0 24 24"><path d="M6 3v18M18 3v18M6 12h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m9 9-3 3 3 3M15 9l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-formula" viewBox="0 0 24 24"><path d="M4 7h7M7.5 3.5v7M14 5l6 6M20 5l-6 6M4 17h7M14 15h6M14 19h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15Z M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-lasso" viewBox="0 0 24 24"><ellipse cx="12" cy="9" rx="8" ry="5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="3 2.4"/><path d="M8 13.5c-1 2.5.5 5 3 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3c.6 4.2 2.8 6.4 7 7-4.2.6-6.4 2.8-7 7-.6-4.2-2.8-6.4-7-7 4.2-.6 6.4-2.8 7-7Z" fill="currentColor"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M12 19V6M6.5 11.5 12 6l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6.5" y="5.5" width="4" height="13" rx="1.2" fill="currentColor"/><rect x="13.5" y="5.5" width="4" height="13" rx="1.2" fill="currentColor"/></symbol>
+</svg>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark"><svg><use href="#i-heart"/></svg></span>
+    <div class="brand-text">
+      <b>Heart Conduction Lab</b>
+      <span class="demo-badge"><i></i>Concept demo<span class="demo-more"> · responses are pre-built</span></span>
+    </div>
+  </div>
+
+  <nav class="modes" role="tablist" aria-label="View">
+    <button role="tab" data-view="tutor" aria-selected="false">Tutor</button>
+    <button role="tab" data-view="student" aria-selected="true">Student</button>
+    <button role="tab" data-view="how" aria-selected="false">How it works</button>
+    <span class="modes-thumb" aria-hidden="true"></span>
+  </nav>
+
+  <div class="tools">
+    <div class="model" data-model="claude">
+      <button class="model-btn" aria-haspopup="listbox" aria-expanded="false">
+        <span class="model-label">Model</span>
+        <span class="model-dot"></span><span class="model-name">Claude</span>
+        <svg class="ico-sm"><use href="#i-chev"/></svg>
+      </button>
+      <ul class="model-menu" role="listbox" hidden>
+        <li role="option" data-model="claude" aria-selected="true"><span class="model-dot"></span>Claude<svg class="tick"><use href="#i-check"/></svg></li>
+        <li role="option" data-model="gemini" aria-selected="false"><span class="model-dot"></span>Gemini<svg class="tick"><use href="#i-check"/></svg></li>
+        <li role="option" data-model="chatgpt" aria-selected="false"><span class="model-dot"></span>ChatGPT<svg class="tick"><use href="#i-check"/></svg></li>
+        <li class="model-note">Shows how the UI would look with each model. Responses here are pre-built.</li>
+      </ul>
+    </div>
+
+    <div class="meter" title="Illustrative token budget">
+      <div class="meter-top"><span class="meter-role">Student budget</span><span class="meter-tag">illustrative</span></div>
+      <div class="meter-bar"><i></i></div>
+      <div class="meter-num"><b>6.2k</b> of 20k tokens today</div>
+    </div>
+
+    <button class="icon-btn theme-btn" aria-label="Switch light or dark theme">
+      <svg class="sun"><use href="#i-sun"/></svg><svg class="moon"><use href="#i-moon"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- STUDENT LAB -->
+  <section class="view view-student" data-view="student" aria-label="Student lab">
+
+    <aside class="levels" aria-label="Levels">
+      <div class="levels-head"><span class="eyebrow">Your path</span><b>Heart blocks</b></div>
+      <ol>
+        <li><button class="lvl is-current" data-level="0"><span class="lvl-n">1</span><div><b>Normal sinus</b><small>Follow one heartbeat</small></div></button></li>
+        <li><button class="lvl" data-level="1"><span class="lvl-n">2</span><div><b>First-degree block</b><small>A longer pause</small></div><svg class="lock"><use href="#i-lock"/></svg></button></li>
+        <li><button class="lvl" data-level="2"><span class="lvl-n">3</span><div><b>Mobitz I</b><small>Longer, longer, dropped</small></div><svg class="lock"><use href="#i-lock"/></svg></button></li>
+        <li><button class="lvl" data-level="3"><span class="lvl-n">4</span><div><b>Mobitz II</b><small>A sudden drop</small></div><svg class="lock"><use href="#i-lock"/></svg></button></li>
+        <li><button class="lvl" data-level="4"><span class="lvl-n">5</span><div><b>Third-degree block</b><small>Two separate rhythms</small></div><svg class="lock"><use href="#i-lock"/></svg></button></li>
+        <li><button class="lvl" data-level="5"><span class="lvl-n">6</span><div><b>Atrial fibrillation</b><small>Irregularly irregular</small></div><svg class="lock"><use href="#i-lock"/></svg></button></li>
+        <li><button class="lvl lvl-quiz" data-level="quiz"><span class="lvl-n">?</span><div><b>Quiz</b><small>Name 3 rhythms</small></div></button></li>
+      </ol>
+      <div class="progress-note"><b class="done-count">0</b> of 6 levels done</div>
+      <div class="vetted"><svg><use href="#i-check"/></svg>Vetted by tutor</div>
+    </aside>
+
+    <div class="stage">
+      <div class="stage-3d" id="stage3d">
+        <div class="stage-glow" aria-hidden="true"></div>
+        <div class="stage-placeholder">
+          <span class="ph-ring"></span>
+          <b>Building the heart</b>
+          <small class="ph-status">Starting</small>
+        </div>
+
+        <nav class="crumbs" aria-label="Zoom level"><button class="is-on" data-layer="0">Heart</button><button data-layer="1">Conduction system</button><button data-layer="2">AV node</button></nav>
+        <div class="gen-tag"><svg><use href="#i-spark"/></svg>Generated with <b class="gen-model">Claude</b></div>
+
+        <div class="chips" role="group" aria-label="Show part">
+          <button class="chip is-on">All</button><button class="chip">Atria</button><button class="chip">AV node</button><button class="chip">Ventricles</button>
+        </div>
+
+        <div class="beat-hud" aria-live="polite">
+          <button class="hud-play" aria-label="Pause"><svg class="i-pause"><use href="#i-pause"/></svg><svg class="i-play"><use href="#i-play"/></svg></button>
+          <span class="hud-dot"></span><span class="hud-text">Starting</span><span class="hud-pr"></span>
+        </div>
+        <div class="hover-tip" hidden><b></b><span></span></div>
+
+        <div class="hotspots" aria-label="Labels on the heart"></div>
+
+        <div class="reveal">
+          <label for="reveal">Reveal</label>
+          <input id="reveal" type="range" min="0" max="100" value="0">
+          <div class="reveal-ends"><span>Heart</span><span>Conduction only</span></div>
+          <label class="map-toggle"><input type="checkbox" id="mapToggle"><span class="sw" aria-hidden="true"></span>Activation map</label>
+          <div class="map-legend" hidden><span>early</span><i></i><span>late</span></div>
+        </div>
+
+        <div class="toolbox" aria-label="Toolbox">
+          <button class="tool" aria-label="Calipers"><svg><use href="#i-caliper"/></svg><span>Calipers</span></button>
+          <button class="tool" aria-label="Formulas"><svg><use href="#i-formula"/></svg><span>Formulas</span></button>
+          <button class="tool" aria-label="Theory"><svg><use href="#i-book"/></svg><span>Theory</span></button>
+          <button class="tool tool-ask" aria-label="Circle to ask"><svg><use href="#i-lasso"/></svg><span>Circle to ask</span></button>
+        </div>
+
+        <div class="stage-note">Illustrative model, not anatomically to scale</div>
+
+
+        <div class="pop pop-formulas" hidden><div class="pop-head"><b>Formulas</b><button class="pop-x" aria-label="Close">×</button></div><div class="pop-body"></div></div>
+        <div class="pop pop-theory" hidden><div class="pop-head"><b>Theory</b><button class="pop-x" aria-label="Close">×</button></div><div class="pop-body"></div></div>
+      </div>
+
+      <div class="controls">
+        <div class="rhythm-pick" role="group" aria-label="Rhythm">
+          <button class="rp is-on" data-rhythm="normal">Normal</button><button class="rp" data-rhythm="first">1st-degree</button><button class="rp" data-rhythm="mobitz1">Mobitz I</button><button class="rp" data-rhythm="mobitz2">Mobitz II</button><button class="rp" data-rhythm="third">3rd-degree</button><button class="rp" data-rhythm="af">AF</button>
+        </div>
+        <div class="sliders">
+          <label class="sl"><span>Speed <b data-out="speed">1×</b></span><input data-in="speed" type="range" min="0.25" max="1" step="0.25" value="1"></label>
+          <label class="sl"><span>Heart rate <b data-out="hr">75 bpm</b></span><input data-in="hr" type="range" min="40" max="150" step="1" value="75"></label>
+        </div>
+      </div>
+
+      <section class="gen" hidden aria-label="Generated answer">
+        <header class="gen-head">
+          <div class="gen-title"><span class="gen-tag2"><svg><use href="#i-spark"/></svg>Generated with <b class="gen-model">Claude</b></span><h3 class="gen-q"></h3></div>
+          <div class="gen-speed" role="group" aria-label="Build speed"><button data-s="1" class="is-on">1×</button><button data-s="3">3×</button><button data-s="skip">Skip</button></div>
+          <button class="pop-x gen-x" aria-label="Close answer">×</button>
+        </header>
+        <ol class="gen-stages"><li>Plan</li><li>Write</li><li>Compile</li><li>Check</li><li>Ready</li></ol>
+        <div class="gen-plan"></div>
+        <div class="gen-body">
+          <div class="gen-code"><div class="gen-code-head"><span>answer.js</span><span class="gen-tokens">0 tokens</span></div><div class="gen-lines"></div></div>
+          <div class="gen-preview"></div>
+        </div>
+        <div class="gen-checks"></div>
+        <div class="gen-improv" hidden><span>Dr. Tutor can ask for</span></div>
+        <p class="gen-request" hidden></p>
+        <footer class="gen-foot">Concept demo: this answer is pre-built. The code shown is the code that draws it.</footer>
+      </section>
+
+      <div class="quiz" hidden aria-label="Quiz">
+        <div class="quiz-head"><div><span class="eyebrow">Quiz</span><h2>Name the rhythm</h2><p>Three strips, no labels. Pick the rhythm for each one.</p></div><div class="quiz-score"></div><button class="pop-x quiz-x" aria-label="Close quiz">×</button></div>
+        <div class="quiz-list"></div>
+      </div>
+
+      <div class="ecg">
+        <div class="ecg-head"><span class="eyebrow">ECG · lead II</span><span class="ecg-hr">–</span><span class="ecg-what"></span><span class="ecg-scale">25 mm/s · 10 mm/mV · small box 40 ms</span></div>
+        <canvas id="ecg" aria-label="ECG strip"></canvas>
+      </div>
+    </div>
+
+    <aside class="panel" aria-label="Lesson">
+      <article class="card classroom" aria-label="Dr. Tutor and the student">
+        <div class="room-view"><div class="room-stage"></div><div class="room-tag"><i></i>Classroom · live</div></div>
+        <div class="room-bubble is-out" role="status"><b>Dr. Tutor</b><p></p></div>
+      </article>
+
+      <article class="card level-card">
+        <span class="eyebrow level-eyebrow">Level 1 · Normal sinus rhythm</span>
+        <h2 class="level-title">Follow one heartbeat</h2>
+        <p class="level-intro">Watch the electrical signal start at the SA node and travel to the ventricles. Notice where it pauses.</p>
+        <div class="steps-bar" aria-label="Step 1 of 6"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="rcard">
+          <div class="rcard-tabs" role="tablist"><button role="tab" data-k="heart" aria-selected="true">In the heart</button><button role="tab" data-k="ecg" aria-selected="false">On the ECG</button><button role="tab" data-k="analogy" aria-selected="false">Analogy</button><button role="tab" data-k="clue" aria-selected="false">Exam clue</button></div>
+          <p class="rcard-text"></p>
+        </div>
+      </article>
+
+      <article class="card task-card" hidden>
+        <span class="step-n">Your task</span>
+        <h3 class="task-q"></h3>
+        <div class="task-body"></div>
+        <div class="feedback" hidden role="status"></div>
+        <div class="step-nav"><button class="btn ghost sol-btn" disabled title="Unlocks after your first try">Worked solution</button><button class="btn check-btn">Check</button></div>
+        <div class="solution" hidden><b>Worked solution</b><p></p></div>
+      </article>
+
+      <article class="card step-card">
+        <span class="step-n">Step 1 of 6</span>
+        <h3>The SA node fires</h3>
+        <p class="step-body">A small patch of cells high in the right atrium sets off each heartbeat. It is the heart's natural pacemaker.</p>
+        <label class="confirm"><input type="checkbox"><span class="confirm-text">I found the SA node</span></label>
+        <div class="step-nav"><button class="btn ghost step-back" disabled>Back</button><button class="btn step-next">Next</button></div>
+      </article>
+
+      <div class="help-row">
+        <button class="btn soft hint-btn"><svg><use href="#i-bulb"/></svg>Hint <small>1 of 3</small></button>
+        <button class="btn soft voice-btn" aria-pressed="false" title="Uses this device's built-in voice"><svg><use href="#i-sound"/></svg><span>Voice off</span></button>
+      </div>
+
+      <div class="ask">
+        <svg><use href="#i-spark"/></svg>
+        <input type="text" placeholder="Ask about anything on screen…" aria-label="Ask a question">
+        <button class="ask-send" aria-label="Ask"><svg><use href="#i-send"/></svg></button>
+      </div>
+      <div class="ask-sugs" aria-label="Suggested questions"></div>
+      <p class="ask-note">Or use <b>Circle to ask</b> on the heart or ECG, or select any text.</p>
+    </aside>
+  </section>
+
+  <!-- TUTOR STUDIO -->
+  <section class="view view-tutor" data-view="tutor" aria-label="Tutor studio" hidden>
+    <div class="workspace win">
+      <div class="win-bar"><i></i><i></i><i></i><span>AI workspace · <b class="gen-model">Claude</b></span>
+        <button class="btn soft play-demo"><svg><use href="#i-play"/></svg>Play demo</button></div>
+      <div class="room-slot"></div>
+      <div class="chat" aria-live="polite">
+        <div class="msg msg-ai chat-hello">
+          <span class="msg-who"><svg><use href="#i-spark"/></svg><b class="gen-model">Claude</b></span>
+          Ask for a lesson, a visual, or a change to one. Press <b>Play demo</b> to watch Dr. Tutor build a lesson.
+        </div>
+      </div>
+      <div class="composer">
+        <input type="text" placeholder="Ask for a lesson, a visual or a change…" aria-label="Message">
+        <button class="ask-send" aria-label="Send"><svg><use href="#i-send"/></svg></button>
+      </div>
+    </div>
+
+    <div class="build">
+      <ol class="trace" aria-label="Build progress">
+        <li><span>1</span>Request</li>
+        <li><span>2</span>Objectives</li>
+        <li><span>3</span>Generate</li>
+        <li><span>4</span>Checks</li>
+        <li><span>5</span>Publish</li>
+      </ol>
+      <div class="preview win studio">
+        <div class="win-bar"><i></i><i></i><i></i><span>Lesson preview</span>
+          <span class="gen-tag gen-tag-inline"><svg><use href="#i-spark"/></svg><b class="gen-model">Claude</b></span>
+          <div class="gen-speed" role="group" aria-label="Build speed"><button data-s="1" class="is-on">1×</button><button data-s="3">3×</button><button data-s="skip">Skip</button></div></div>
+        <div class="studio-top">
+          <ol class="gen-stages"><li>Plan</li><li>Write</li><li>Compile</li><li>Check</li><li>Ready</li></ol>
+          <div class="gen-plan"></div>
+        </div>
+        <div class="studio-body">
+          <div class="gen-code"><div class="gen-code-head"><span>lesson.js</span><span class="gen-tokens">0 tokens</span></div><div class="gen-lines"></div></div>
+          <div class="gen-preview studio-preview"></div>
+        </div>
+        <div class="gen-checks" hidden></div>
+        <div class="studio-checks" hidden></div>
+        <div class="studio-foot" hidden>
+          <span class="studio-badge" hidden><svg><use href="#i-check"/></svg>Vetted by tutor · Published to <b>Step 1 · Cardiology</b></span>
+          <button class="btn ghost studio-as-student">Preview as student</button>
+          <button class="btn studio-publish">Approve and publish</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="view view-how" data-view="how" aria-label="How it works" hidden>
+    <div class="how-head">
+      <span class="eyebrow">How it works</span>
+      <h2>Lessons that build themselves, checked by a tutor</h2>
+      <p>A tutor asks in plain English. A model of their choice writes the lesson as code, a fixed library of tested components draws it, automated checks test it, and the tutor approves it. Students learn inside it, and can circle anything to get a new panel built for them.</p>
+    </div>
+    <div class="flow">
+      <svg class="flow-lines" aria-hidden="true"><path class="flow-path"/><path class="flow-lit"/><circle class="flow-packet" r="7"/></svg>
+      <ol class="flow-nodes">
+        <li data-i="0"><span class="fn-ico">✎</span><small>Tutor</small><b>Asks for a lesson</b></li>
+        <li data-i="1"><span class="fn-ico">✦</span><small>Model of choice</small><b>Writes it as code</b></li>
+        <li data-i="2"><span class="fn-ico">◫</span><small>Component library</small><b>Draws the interactive</b></li>
+        <li data-i="3"><span class="fn-ico">✓</span><small>Automated</small><b>Checks facts and levels</b></li>
+        <li data-i="4"><span class="fn-ico">◎</span><small>Tutor</small><b>Approves and publishes</b></li>
+        <li data-i="5"><span class="fn-ico">◯</span><small>Student</small><b>Learns, circles to ask</b></li>
+      </ol>
+    </div>
+    <div class="flow-detail" aria-live="polite"><b class="fd-title"></b><p class="fd-text"></p></div>
+    <table class="flow-table">
+      <thead><tr><th>Stage</th><th>In this concept demo</th><th>In production</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div class="flow-cta">
+      <button class="btn cta-tutor"><svg><use href="#i-play"/></svg>Watch Dr. Tutor build a lesson</button>
+      <button class="btn ghost cta-student"><svg><use href="#i-spark"/></svg>Ask as a student</button>
+    </div>
+    <p class="how-note">Concept demo: every AI response here is pre-built, and the code you see is the code that draws it. In production each request would call the chosen model, with a token budget per tutor and per student.</p>
+  </section>
+</main>
+
+<footer class="foot">
+  <span class="foot-warn">Draft for physician review. Not for clinical use.</span>
+  <span>Concept demo: every AI response is pre-built. Synthetic content only.</span>
+  <span class="foot-by">Prototype for The Match Guy. Built by Ravi Polisetti.</span>
+</footer>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+  "three-mesh-bvh": "https://cdn.jsdelivr.net/npm/three-mesh-bvh@0.7.0/build/index.module.js"
+} }
+</script>
+<script type="module" src="src/ui.js"></script>
+</body>
+</html>
